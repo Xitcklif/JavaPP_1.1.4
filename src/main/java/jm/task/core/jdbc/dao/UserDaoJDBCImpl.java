@@ -3,6 +3,7 @@ package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,10 +13,11 @@ import java.util.List;
 public class UserDaoJDBCImpl implements UserDao {
     private Util db;
     private Statement st;
+    private Connection con;
 
     public UserDaoJDBCImpl() {
-        db = new Util();
-        st = db.getStatement();
+        con = Util.getConnection();
+        st = db.getStatement(con);
     }
 
     public void createUsersTable() {

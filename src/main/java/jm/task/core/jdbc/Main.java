@@ -1,31 +1,46 @@
 package jm.task.core.jdbc;
 
 import jm.task.core.jdbc.model.User;
-import jm.task.core.jdbc.service.UserService;
-import jm.task.core.jdbc.service.UserServiceImpl;
-
-import java.sql.SQLException;
+import jm.task.core.jdbc.service.*;
 import java.util.List;
 
 public class Main {
-    private static final UserService userService = new UserServiceImpl();
+    public static void main(String[] args) {
+        UserServiceImpl userService = new UserServiceImpl();
 
-    public static void main(String[] args) throws SQLException {
+        System.out.println("Создание БД:");
         userService.createUsersTable();
-        saveUser("Ivan", "Ivanov", (byte) 5);
-        saveUser("Petr", "Petrov", (byte) 12);
-        saveUser("Maxim", "Maximov", (byte) 45);
-        saveUser("Jane", "Janov", (byte) 24);
+
+        System.out.println("\nЗаполнение БД:");
+        userService.saveUser("Ivan", "Ivanov", (byte) 5);
+        userService.saveUser("Petr", "Petrov", (byte) 12);
+        userService.saveUser("Maxim", "Maximov", (byte) 45);
+        userService.saveUser("Jane", "Janov", (byte) 24);
+
+        System.out.println("\nСодержимое БД:");
         List<User> users = userService.getAllUsers();
         for (User u : users) {
             System.out.println(u.toString());
         }
-        userService.cleanUsersTable();
-        userService.dropUsersTable();
-    }
 
-    public static void saveUser(String name, String lastName, byte age) {
-        userService.saveUser(name, lastName, age);
-        System.out.println("User с именем - " + name + " добавлен в базу данных");
+        System.out.println("\nСодержимое БД после удаления записи:");
+        userService.removeUserById(3);
+        users = userService.getAllUsers();
+        for (User u : users) {
+            System.out.println(u.toString());
+        }
+
+        System.out.println("\nСодержимое БД после очистки таблицы:");
+        userService.cleanUsersTable();
+        users = userService.getAllUsers();
+        for (User u : users) {
+            System.out.println(u.toString());
+        }
+
+        System.out.println("\nУдаление БД:");
+        userService.dropUsersTable();
+
+        /*System.out.println("\nЗакрытие соединения:");
+        userService.closeSession();*/
     }
 }
