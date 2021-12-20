@@ -9,17 +9,14 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
-    private SessionFactory sf;
     private Session session;
 
     public UserDaoHibernateImpl() {
-        sf = Util.getSessionFactory();
-        session = sf.openSession();
     }
 
     @Override
     public void createUsersTable() {
-        session = sf.getCurrentSession();
+        session = Util.getSessionFactory().openSession();
         Transaction tr = session.beginTransaction();
         session.createSQLQuery(
                         "create table if not exists User " +
@@ -32,54 +29,56 @@ public class UserDaoHibernateImpl implements UserDao {
 
                 .executeUpdate();
         tr.commit();
+        session.close();
     }
 
     @Override
     public void dropUsersTable() {
-        session = sf.getCurrentSession();
+        session = Util.getSessionFactory().openSession();
         Transaction tr = session.beginTransaction();
         session.createSQLQuery("drop table if exists User;").executeUpdate();
         tr.commit();
+        session.close();
     }
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-        session = sf.getCurrentSession();
+        session = Util.getSessionFactory().openSession();
         Transaction tr = session.beginTransaction();
         session.save(new User(name, lastName, age));
         tr.commit();
+        session.close();
     }
 
     @Override
     public void removeUserById(long id) {
-        session = sf.getCurrentSession();
+        session = Util.getSessionFactory().openSession();
         Transaction tr = session.beginTransaction();
         session.createSQLQuery("delete from User where id = " + id + ";")
                 .executeUpdate();
         tr.commit();
+        session.close();
     }
 
     @Override
     public List<User> getAllUsers() {
-        session = sf.getCurrentSession();
+        session = Util.getSessionFactory().openSession();
         Transaction tr = session.beginTransaction();
         CriteriaQuery cq = session.getCriteriaBuilder().createQuery(User.class);
         Root<User> root = cq.from(User.class);
         cq.select(root);
         List<User> users = session.createQuery(cq).getResultList();
         tr.commit();
+        session.close();
         return users;
     }
 
     @Override
     public void cleanUsersTable() {
-        session = sf.getCurrentSession();
+        session = Util.getSessionFactory().openSession();
         Transaction tr = session.beginTransaction();
         session.createSQLQuery("delete from User").executeUpdate();
         tr.commit();
-    }
-
-    public void closeSession() {
         session.close();
     }
 }

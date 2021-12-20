@@ -40,7 +40,7 @@ public class Main {
         System.out.println("\nУдаление БД:");
         userService.dropUsersTable();
 
-        /*System.out.println("\nЗакрытие соединения:");
-        userService.closeSession();*/
+//        System.out.println("\nЗакрытие соединения:");
+//        userService.closeSession();
     }
 }

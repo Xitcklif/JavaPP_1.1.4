@@ -13,9 +13,6 @@ import java.sql.*;
 import jm.task.core.jdbc.model.User;
 
 public class Util {
-    public Util() {
-    }
-
     public static Connection getConnection() {
         Connection con;
         try {
