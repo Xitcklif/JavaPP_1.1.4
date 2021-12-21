@@ -13,6 +13,11 @@ import java.sql.*;
 import jm.task.core.jdbc.model.User;
 
 public class Util {
+    private static Util single = null;
+
+    private Util() {
+    }
+
     public static Connection getConnection() {
         Connection con;
         try {
@@ -28,16 +33,14 @@ public class Util {
         return null;
     }
 
-    public static Statement getStatement(Connection con) {
-        try {
-            return con.createStatement();
-        } catch (SQLException e) {
-            e.printStackTrace();
+    public static Util getSingleCon() {
+        if (single == null) {
+            single = new Util();
         }
-        return null;
+        return single;
     }
 
-    public static SessionFactory getSessionFactory() {
+    public SessionFactory getSessionFactory() {
         Configuration conf = new Configuration();
         Properties settings = new Properties();
         ServiceRegistry sr;
