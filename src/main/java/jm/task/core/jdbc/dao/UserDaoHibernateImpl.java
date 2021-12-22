@@ -43,9 +43,10 @@ public class UserDaoHibernateImpl implements UserDao {
             e.printStackTrace();
         } finally {
             try {
-                session.close();
-            } catch (HibernateException e) {
-                e.printStackTrace();
+                if (session != null) {
+                    session.close();
+                }
+            } catch (HibernateException ignore) {
             }
         }
     }
@@ -68,9 +69,10 @@ public class UserDaoHibernateImpl implements UserDao {
             e.printStackTrace();
         } finally {
             try {
-                session.close();
-            } catch (HibernateException e) {
-                e.printStackTrace();
+                if (session != null) {
+                    session.close();
+                }
+            } catch (HibernateException ignore) {
             }
         }
     }
@@ -93,9 +95,10 @@ public class UserDaoHibernateImpl implements UserDao {
             e.printStackTrace();
         } finally {
             try {
-                session.close();
-            } catch (HibernateException e) {
-                e.printStackTrace();
+                if (session != null) {
+                    session.close();
+                }
+            } catch (HibernateException ignore) {
             }
         }
     }
@@ -119,9 +122,10 @@ public class UserDaoHibernateImpl implements UserDao {
             e.printStackTrace();
         } finally {
             try {
-                session.close();
-            } catch (HibernateException e) {
-                e.printStackTrace();
+                if (session != null) {
+                    session.close();
+                }
+            } catch (HibernateException ignore) {
             }
         }
     }
@@ -148,9 +152,10 @@ public class UserDaoHibernateImpl implements UserDao {
             e.printStackTrace();
         } finally {
             try {
-                session.close();
-            } catch (HibernateException e) {
-                e.printStackTrace();
+                if (session != null) {
+                    session.close();
+                }
+            } catch (HibernateException ignore) {
             }
         }
         return users;
@@ -174,9 +179,10 @@ public class UserDaoHibernateImpl implements UserDao {
             e.printStackTrace();
         } finally {
             try {
-                session.close();
-            } catch (HibernateException e) {
-                e.printStackTrace();
+                if (session != null) {
+                    session.close();
+                }
+            } catch (HibernateException ignore) {
             }
         }
     }
